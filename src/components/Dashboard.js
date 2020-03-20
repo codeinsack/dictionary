@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -12,16 +12,25 @@ import {
   CardMedia,
   CardContent,
   Typography,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  Chip,
 } from "@material-ui/core";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import Chip from "@material-ui/core/Chip";
 
-const Dashboard = () => {
+import { imagesActions } from "../store/actions"
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+
+const Dashboard = ({ imageList, actions }) => {
   const [search, setSearch] = useState('')
   const [images, setImages] = useState([])
   const [word, setWord] = useState(null)
+  console.log('imageList', imageList)
+
+  useEffect(() => {
+    actions.fetchImagesList("yellow")
+  }, [])
 
   const onSearchChange = (event) => {
     const { value } = event.target
@@ -124,7 +133,20 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default connect(
+  state => ({
+    imageList: state.images,
+  }),
+  dispatch => ({
+    actions: bindActionCreators(
+      {
+        ...imagesActions,
+      },
+      dispatch,
+    ),
+  }),
+)(Dashboard)
+
 
 const Wrapper = styled.div`
   display: flex;
