@@ -1,13 +1,14 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel'
 
 import {
   Box,
   Button,
   TextField,
   Card,
-  CardActionArea,
   CardMedia,
   CardContent,
   Typography,
@@ -15,20 +16,8 @@ import {
 
 const Dashboard = () => {
   const [search, setSearch] = useState('')
-  const [image, setImage] = useState(null)
-
-  useEffect(() => {
-    axios.get('https://pixabay.com/api/', {
-      params: {
-        key: '15668645-1c45581844455e90933f1f096',
-        q: 'слива',
-        per_page: 3,
-      }
-    })
-      .then(({ data }) => {
-        setImage(data.hits[0])
-      })
-  }, [])
+  const [images, setImages] = useState([])
+  const [word, setWord] = useState(null)
 
   const onSearchChange = (event) => {
     const { value } = event.target
@@ -44,7 +33,13 @@ const Dashboard = () => {
       }
     })
       .then(({ data }) => {
-        setImage(data.hits[0])
+        console.log('data images', data)
+        setImages(data.hits)
+      })
+    axios.get(`https://api.dictionaryapi.dev/api/v1/entries/en/${search}`)
+      .then(({ data }) => {
+        console.log('data dictionary', data)
+        setWord(data[0])
       })
   }
 
@@ -65,23 +60,30 @@ const Dashboard = () => {
           Find
         </Button>
       </Box>
-      {image && (
-        <Card key={image.id}>
-          <CardActionArea>
-            <CardMedia
-              image={image.webformatURL}
-              title={image.tags}
-            />
+      {word && (
+        <Card>
+          <div>
+            <Carousel
+              showThumbs={false}
+              showStatus={false}
+            >
+              {images.map(image => (
+                <CardMedia
+                  key={image.id}
+                  image={image.webformatURL}
+                  title={image.tags}
+                />
+              ))}
+            </Carousel>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                Lizard
+                {word.word}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
-                Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                across all continents except Antarctica
+                {JSON.stringify(word.meaning)}
               </Typography>
             </CardContent>
-          </CardActionArea>
+          </div>
         </Card>
       )}
     </Wrapper>
