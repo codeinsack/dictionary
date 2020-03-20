@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {Fragment, useState} from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -13,6 +13,10 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import Chip from "@material-ui/core/Chip";
 
 const Dashboard = () => {
   const [search, setSearch] = useState('')
@@ -29,11 +33,11 @@ const Dashboard = () => {
       params: {
         key: '15668645-1c45581844455e90933f1f096',
         q: search,
-        per_page: 3,
+        per_page: 5,
+        lang: 'en',
       }
     })
       .then(({ data }) => {
-        console.log('data images', data)
         setImages(data.hits)
       })
     axios.get(`https://api.dictionaryapi.dev/api/v1/entries/en/${search}`)
@@ -42,6 +46,11 @@ const Dashboard = () => {
         setWord(data[0])
       })
   }
+  const [expanded, setExpanded] = React.useState('panel1');
+
+  const handleChange = panel => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
   return (
     <Wrapper>
@@ -56,6 +65,7 @@ const Dashboard = () => {
           color="primary"
           variant="contained"
           onClick={onFindClick}
+          disabled={!search.length}
         >
           Find
         </Button>
@@ -79,9 +89,33 @@ const Dashboard = () => {
               <Typography gutterBottom variant="h5" component="h2">
                 {word.word}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                {JSON.stringify(word.meaning)}
-              </Typography>
+              {Object.keys(word.meaning).map((key, index) => {
+                return (
+                  <ExpansionPanel
+                    key={key}
+                    square
+                    expanded={expanded === `panel${index + 1}`}
+                    onChange={handleChange(`panel${index + 1}`)}
+                  >
+                    <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
+                      <Typography>{key}</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                      <ul>
+                        {word.meaning[key].map((variant, index) => (
+                          <li key={index}>
+                            <p>{variant.definition}</p>
+                            <p><i>{variant.example}</i></p>
+                            {variant.synonyms?.map(synonym => (
+                              <Chip key={synonym} label={synonym} />
+                            ))}
+                          </li>
+                        ))}
+                      </ul>
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                )
+              })}
             </CardContent>
           </div>
         </Card>
@@ -98,10 +132,10 @@ const Wrapper = styled.div`
   align-items: center;
   
   .MuiCardMedia-root {
-    height: 150px;
+    height: 250px;
   }
   .MuiCard-root {
-    width: 40%;
+    width: 70%;
   }
   .MuiButton-root {
     margin-left: 10px;
