@@ -22,7 +22,7 @@ import { wordDefinitionActions } from "../../store/actions/wordDefinition"
 
 const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
   const [search, setSearch] = useState('')
-  const [expanded, setExpanded] = React.useState('panel1');
+  const [expanded, setExpanded] = React.useState(0);
 
   const onSearchChange = (event) => {
     const { value } = event.target
@@ -34,7 +34,7 @@ const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
     actions.fetchWordDefinition(search)
   }
 
-  const handleChange = panel => (event, newExpanded) => {
+  const onExpandedChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
@@ -69,10 +69,10 @@ const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
                   <ExpansionPanel
                     key={key}
                     square
-                    expanded={expanded === `panel${index + 1}`}
-                    onChange={handleChange(`panel${index + 1}`)}
+                    expanded={expanded === index}
+                    onChange={onExpandedChange(index)}
                   >
-                    <ExpansionPanelSummary aria-controls="panel1d-content" id="panel1d-header">
+                    <ExpansionPanelSummary>
                       <Typography>{key}</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
