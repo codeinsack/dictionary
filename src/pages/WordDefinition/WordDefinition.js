@@ -2,15 +2,12 @@ import React, { useState } from 'react'
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import styled from 'styled-components'
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from 'react-responsive-carousel'
 
 import {
   Box,
   Button,
   TextField,
   Card,
-  CardMedia,
   CardContent,
   Typography,
   ExpansionPanel,
@@ -19,10 +16,11 @@ import {
   Chip,
 } from "@material-ui/core";
 
-import { imagesActions } from "../store/actions/images"
-import { wordsActions } from "../store/actions/words"
+import Carousel from "../../components/UI/Carousel/Carousel";
+import { imagesActions } from "../../store/actions/images"
+import { wordsActions } from "../../store/actions/words"
 
-const Dashboard = ({ images, word, actions }) => {
+const WordDefinition = ({ images, word, actions }) => {
   const [search, setSearch] = useState('')
   const [expanded, setExpanded] = React.useState('panel1');
 
@@ -61,18 +59,7 @@ const Dashboard = ({ images, word, actions }) => {
       {word && (
         <Card>
           <div>
-            <Carousel
-              showThumbs={false}
-              showStatus={false}
-            >
-              {images.map(image => (
-                <CardMedia
-                  key={image.id}
-                  image={image.webformatURL}
-                  title={image.tags}
-                />
-              ))}
-            </Carousel>
+            <Carousel images={images} />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
                 {word.word}
@@ -126,7 +113,7 @@ export default connect(
       dispatch,
     ),
   }),
-)(Dashboard)
+)(WordDefinition)
 
 const Wrapper = styled.div`
   display: flex;
