@@ -21,7 +21,7 @@ import { wordImagesActions } from "../../store/actions/wordImages"
 import { wordDefinitionActions } from "../../store/actions/wordDefinition"
 
 const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState('');
   const [expanded, setExpanded] = React.useState(0);
 
   const onSearchChange = (event) => {
@@ -30,7 +30,7 @@ const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
   }
 
   const onFindClick = () => {
-    // actions.fetchWordImages(search)
+    actions.fetchWordImages(search)
     actions.fetchWordDefinition(search)
   }
 
