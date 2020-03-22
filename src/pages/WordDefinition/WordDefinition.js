@@ -30,7 +30,7 @@ const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
   }
 
   const onFindClick = () => {
-    actions.fetchWordImages(search)
+    // actions.fetchWordImages(search)
     actions.fetchWordDefinition(search)
   }
 
