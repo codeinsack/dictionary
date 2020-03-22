@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import styled from 'styled-components'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel'
@@ -18,19 +19,12 @@ import {
   Chip,
 } from "@material-ui/core";
 
-import { imagesActions } from "../store/actions"
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
+import { imagesActions } from "../store/actions/images"
+import { wordsActions } from "../store/actions/words"
 
-const Dashboard = ({ imageList, actions }) => {
+const Dashboard = ({ images, word, actions }) => {
   const [search, setSearch] = useState('')
-  const [images, setImages] = useState([])
-  const [word, setWord] = useState(null)
-  console.log('imageList', imageList)
-
-  useEffect(() => {
-    actions.fetchImagesList("yellow")
-  }, [])
+  const [expanded, setExpanded] = React.useState('panel1');
 
   const onSearchChange = (event) => {
     const { value } = event.target
@@ -38,24 +32,9 @@ const Dashboard = ({ imageList, actions }) => {
   }
 
   const onFindClick = () => {
-    axios.get('https://pixabay.com/api/', {
-      params: {
-        key: '15668645-1c45581844455e90933f1f096',
-        q: search,
-        per_page: 5,
-        lang: 'en',
-      }
-    })
-      .then(({ data }) => {
-        setImages(data.hits)
-      })
-    axios.get(`https://api.dictionaryapi.dev/api/v1/entries/en/${search}`)
-      .then(({ data }) => {
-        console.log('data dictionary', data)
-        setWord(data[0])
-      })
+    actions.fetchImagesList(search)
+    actions.fetchWordsList(search)
   }
-  const [expanded, setExpanded] = React.useState('panel1');
 
   const handleChange = panel => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -135,18 +114,19 @@ const Dashboard = ({ imageList, actions }) => {
 
 export default connect(
   state => ({
-    imageList: state.images,
+    images: state.images.list,
+    word: state.words.word,
   }),
   dispatch => ({
     actions: bindActionCreators(
       {
         ...imagesActions,
+        ...wordsActions,
       },
       dispatch,
     ),
   }),
 )(Dashboard)
-
 
 const Wrapper = styled.div`
   display: flex;

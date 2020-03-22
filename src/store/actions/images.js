@@ -1,7 +1,7 @@
-import * as actionType from "../constants"
+import * as actionTypes from "../constants"
 
 const fetchImagesList = (search) => ({
-  type: actionType.FETCH_IMAGES_LIST,
+  type: actionTypes.FETCH_IMAGES_LIST,
   search,
 })
 
