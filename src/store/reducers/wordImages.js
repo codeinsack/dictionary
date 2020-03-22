@@ -1,27 +1,27 @@
 import * as actionTypes from "../constants"
 
 const initialState = {
-  word: null,
+  list: [],
   error: null,
   loading: null,
 }
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_WORDS_LIST_START:
+    case actionTypes.FETCH_WORD_IMAGES_START:
       return {
         ...state,
         error: null,
         loading: true,
       }
-    case actionTypes.FETCH_WORDS_LIST_SUCCESS:
+    case actionTypes.FETCH_WORD_IMAGES_SUCCESS:
       return {
         ...state,
-        word: action.data,
+        list: action.list,
         error: null,
         loading: false,
       }
-    case actionTypes.FETCH_WORDS_LIST_FAIL:
+    case actionTypes.FETCH_WORD_IMAGES_FAIL:
       return {
         ...state,
         error: action.error,

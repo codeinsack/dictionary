@@ -11,6 +11,6 @@ const fetchList = async search => (
   })
 )
 
-export const imagesService = {
+export const wordImagesService = {
   fetchList,
 }

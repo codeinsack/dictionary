@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import imagesReducer from './images'
-import wordsReducer from './words'
+import wordImagesReducer from './wordImages'
+import wordDefinitionReducer from './wordDefinition'
 
 const rootReducer = combineReducers({
-  images: imagesReducer,
-  words: wordsReducer,
+  wordImages: wordImagesReducer,
+  wordDefinition: wordDefinitionReducer,
 })
 
 export default rootReducer

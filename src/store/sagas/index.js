@@ -1,13 +1,13 @@
 import { takeEvery, all } from "redux-saga/effects"
 
 import * as actionTypes from "../constants"
-import { fetchImages } from "./images";
-import { fetchWords } from "./words";
+import { fetchWordImages } from "./wordImages";
+import { fetchWordDefinition } from "./wordDefinition";
 
 function* watchers() {
   yield all([
-    takeEvery(actionTypes.FETCH_IMAGES_LIST, fetchImages),
-    takeEvery(actionTypes.FETCH_WORDS_LIST, fetchWords),
+    takeEvery(actionTypes.FETCH_WORD_IMAGES, fetchWordImages),
+    takeEvery(actionTypes.FETCH_WORD_DEFINITION, fetchWordDefinition),
   ])
 }
 

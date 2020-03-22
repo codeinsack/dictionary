@@ -17,10 +17,10 @@ import {
 } from "@material-ui/core";
 
 import Carousel from "../../components/UI/Carousel/Carousel";
-import { imagesActions } from "../../store/actions/images"
-import { wordsActions } from "../../store/actions/words"
+import { wordImagesActions } from "../../store/actions/wordImages"
+import { wordDefinitionActions } from "../../store/actions/wordDefinition"
 
-const WordDefinition = ({ images, word, actions }) => {
+const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
   const [search, setSearch] = useState('')
   const [expanded, setExpanded] = React.useState('panel1');
 
@@ -30,8 +30,8 @@ const WordDefinition = ({ images, word, actions }) => {
   }
 
   const onFindClick = () => {
-    actions.fetchImagesList(search)
-    actions.fetchWordsList(search)
+    actions.fetchWordImages(search)
+    actions.fetchWordDefinition(search)
   }
 
   const handleChange = panel => (event, newExpanded) => {
@@ -56,15 +56,15 @@ const WordDefinition = ({ images, word, actions }) => {
           Find
         </Button>
       </Box>
-      {word && (
+      {wordDefinition && (
         <Card>
           <div>
-            <Carousel images={images} />
+            <Carousel images={wordImages} />
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">
-                {word.word}
+                {wordDefinition.word}
               </Typography>
-              {Object.keys(word.meaning).map((key, index) => {
+              {Object.keys(wordDefinition.meaning).map((key, index) => {
                 return (
                   <ExpansionPanel
                     key={key}
@@ -77,7 +77,7 @@ const WordDefinition = ({ images, word, actions }) => {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <ul>
-                        {word.meaning[key].map((variant, index) => (
+                        {wordDefinition.meaning[key].map((variant, index) => (
                           <li key={index}>
                             <p>{variant.definition}</p>
                             <p><i>{variant.example}</i></p>
@@ -101,14 +101,14 @@ const WordDefinition = ({ images, word, actions }) => {
 
 export default connect(
   state => ({
-    images: state.images.list,
-    word: state.words.word,
+    wordImages: state.wordImages.list,
+    wordDefinition: state.wordDefinition.data,
   }),
   dispatch => ({
     actions: bindActionCreators(
       {
-        ...imagesActions,
-        ...wordsActions,
+        ...wordImagesActions,
+        ...wordDefinitionActions,
       },
       dispatch,
     ),
