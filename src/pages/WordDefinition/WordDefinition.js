@@ -11,6 +11,7 @@ import {
 import WordCard from "./WordCard";
 import { wordImagesActions } from "../../store/actions/wordImages"
 import { wordDefinitionActions } from "../../store/actions/wordDefinition"
+import { dictionaryWordsActions } from "../../store/actions/dictionaryWords"
 import wordImagesSelectors from "../../store/selectors/wordImages"
 import wordDefinitionSelectors from "../../store/selectors/wordDefinition"
 
@@ -30,6 +31,10 @@ const WordDefinition = () => {
     dispatch(wordDefinitionActions.fetchWordDefinition(search))
   }
 
+  const onAddNewWordClick = () => {
+    dispatch(dictionaryWordsActions.addWordToDictionary(wordDefinition))
+  }
+
   return (
     <Wrapper>
       <Box display="flex" justifyContent="center" mb={2} >
@@ -46,6 +51,14 @@ const WordDefinition = () => {
           disabled={!search.length}
         >
           Find
+        </Button>
+        <Button
+          color="primary"
+          variant="outlined"
+          onClick={onAddNewWordClick}
+          disabled={!wordDefinition}
+        >
+          Add word
         </Button>
       </Box>
       {wordDefinition && (

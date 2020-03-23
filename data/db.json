@@ -1,0 +1,73 @@
+{
+  "words": [
+    {
+      "word": "lament",
+      "phonetic": "/ləˈment/",
+      "origin": "Late Middle English (as a verb): from French lamenter or Latin lamentari, from lamenta (plural) ‘weeping, wailing’.",
+      "meaning": {
+        "noun": [
+          {
+            "definition": "A passionate expression of grief or sorrow.",
+            "example": "his mother's night-long laments for his father",
+            "synonyms": [
+              "wail",
+              "wailing",
+              "lamentation",
+              "moan",
+              "moaning",
+              "groan",
+              "weeping",
+              "crying",
+              "sob",
+              "sobbing",
+              "keening",
+              "howl",
+              "complaint"
+            ]
+          }
+        ],
+        "transitive verb": [
+          {
+            "definition": "Mourn (a person's loss or death)",
+            "example": "he was lamenting the death of his infant daughter",
+            "synonyms": [
+              "mourn",
+              "grieve",
+              "grieve for",
+              "grieve over",
+              "weep for",
+              "shed tears for"
+            ]
+          }
+        ]
+      },
+      "id": 1
+    },
+    {
+      "word": "reassure",
+      "phonetic": "/ˌrēəˈSHo͝or/",
+      "meaning": {
+        "transitive verb": [
+          {
+            "definition": "Say or do something to remove the doubts or fears of (someone)",
+            "example": "he understood her feelings and tried to reassure her",
+            "synonyms": [
+              "put someone's mind at rest",
+              "set someone's mind at rest",
+              "dispel someone's fears",
+              "bolster someone's confidence",
+              "restore someone's confidence",
+              "raise someone's spirits",
+              "put someone at ease",
+              "encourage",
+              "hearten",
+              "buoy up",
+              "cheer up"
+            ]
+          }
+        ]
+      },
+      "id": 2
+    }
+  ]
+}
