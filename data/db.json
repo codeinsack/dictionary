@@ -68,6 +68,32 @@
         ]
       },
       "id": 2
+    },
+    {
+      "word": "trolley",
+      "phonetic": "/ˈträlē/",
+      "origin": "Early 19th century of dialect origin, perhaps from troll.",
+      "meaning": {
+        "noun": [
+          {
+            "definition": "short for trolley car or trolley bus"
+          },
+          {
+            "example": "In later years, the tarries were electrified, and poles held the trolley wire.",
+            "synonyms": [
+              "handcart",
+              "pushcart",
+              "trolley",
+              "barrow",
+              "wheelbarrow"
+            ]
+          },
+          {
+            "definition": "A large metal basket or frame on wheels, used for transporting heavy or large items, such as supermarket purchases or luggage at an airport or railroad station."
+          }
+        ]
+      },
+      "id": 3
     }
   ]
 }
