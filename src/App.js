@@ -9,19 +9,17 @@ import Practice from "./pages/Practice";
 import Progress from "./pages/Progress";
 import Tabs from "./components/UI/Tabs/Tabs";
 
-function App() {
-  return (
-    <Fragment>
-      <CssBaseline />
-      <Tabs />
-      <Switch>
-        <Route exact path="/" component={WordDefinition} />
-        <Route path="/dictionary" component={Dictionary} />
-        <Route path="/practice" component={Practice} />
-        <Route path="/progress" component={Progress} />
-      </Switch>
-    </Fragment>
-  );
-}
+const App = () => (
+  <Fragment>
+    <CssBaseline />
+    <Tabs />
+    <Switch>
+      <Route exact path="/" component={WordDefinition} />
+      <Route path="/dictionary" component={Dictionary} />
+      <Route path="/practice" component={Practice} />
+      <Route path="/progress" component={Progress} />
+    </Switch>
+  </Fragment>
+)
 
 export default App;
