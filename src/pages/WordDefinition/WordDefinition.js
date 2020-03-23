@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styled from 'styled-components'
 
 import {
@@ -19,10 +18,15 @@ import {
 import Carousel from "../../components/UI/Carousel/Carousel";
 import { wordImagesActions } from "../../store/actions/wordImages"
 import { wordDefinitionActions } from "../../store/actions/wordDefinition"
+import wordImagesSelectors from "../../store/selectors/wordImages"
+import wordDefinitionSelectors from "../../store/selectors/wordDefinition"
 
-const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
+const WordDefinition = () => {
   const [search, setSearch] = useState('');
   const [expanded, setExpanded] = React.useState(0);
+  const wordImages = useSelector(wordImagesSelectors.getList)
+  const wordDefinition = useSelector(wordDefinitionSelectors.getData)
+  const dispatch = useDispatch()
 
   const onSearchChange = (event) => {
     const { value } = event.target
@@ -30,8 +34,8 @@ const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
   }
 
   const onFindClick = () => {
-    actions.fetchWordImages(search)
-    actions.fetchWordDefinition(search)
+    dispatch(wordImagesActions.fetchWordImages(search))
+    dispatch(wordDefinitionActions.fetchWordDefinition(search))
   }
 
   const onExpandedChange = panel => (event, newExpanded) => {
@@ -99,21 +103,7 @@ const WordDefinition = ({ wordImages, wordDefinition, actions }) => {
   );
 };
 
-export default connect(
-  state => ({
-    wordImages: state.wordImages.list,
-    wordDefinition: state.wordDefinition.data,
-  }),
-  dispatch => ({
-    actions: bindActionCreators(
-      {
-        ...wordImagesActions,
-        ...wordDefinitionActions,
-      },
-      dispatch,
-    ),
-  }),
-)(WordDefinition)
+export default WordDefinition
 
 const Wrapper = styled.div`
   display: flex;
